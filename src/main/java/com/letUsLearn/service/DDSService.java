@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import com.letUsLearn.entity.DDS;
 import com.letUsLearn.entity.DDSdetail;
+import com.letUsLearn.exception.DDSBadInputException;
+import com.letUsLearn.exception.DDSNotFoundException;
 import com.letUsLearn.repository.DDSDetailRepository;
 import com.letUsLearn.repository.DDSRepository;
 import com.letUsLearn.vo.DDSVo;
@@ -28,7 +30,7 @@ public class DDSService {
 
 	public DDSVo diceRoll(int sides, int dices, int rolls) throws Exception {
 		if (sides < 4 || dices < 1 || rolls < 1) {
-			throw new Exception("BadInput:required -->sides>=4 && dices>=1 && rolls>=1");
+			throw new DDSBadInputException("BadInput:required -->sides>=4 && dices>=1 && rolls>=1");
 		}
 		HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
 		Random ranNum = new Random();
@@ -58,7 +60,8 @@ public class DDSService {
 		return ddsVo;
 	}
 
-	public DDSVo findbyid(Long id) {
+	public DDSVo findbyid(Long id) throws DDSNotFoundException {
+		if (repository1.findById(id).isEmpty())	throw new DDSNotFoundException("No item found for {id}=" + id);
 		DDS dds = repository1.findById(id).get();
 		Iterator<DDSdetail> itr = dds.getDdsdetail().iterator();
 		HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
