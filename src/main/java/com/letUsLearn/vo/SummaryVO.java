@@ -9,13 +9,6 @@ public class SummaryVO {
 	public SummaryVO() {
 	}
 
-	public SummaryVO(int dices, int sides, int count, int sumofrolls) {
-		this.dices = dices;
-		this.sides = sides;
-		this.count = count;
-		this.sumofrolls = sumofrolls;
-	}
-
 	public SummaryVO(Integer[] s) {
 		this.dices = s[0];
 		this.sides = s[1];

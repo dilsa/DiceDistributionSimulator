@@ -9,23 +9,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Derbytest {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		Connection conn;
-		try {
-			conn = getconnection("jdbc:derby:/Database/Derby/DB-Data;create=true");
-			showTables(conn);
+		conn = getconnection("jdbc:derby:/Database/Derby/DB-Data;create=true");
+		showTables(conn);
 
-			String string1 = "select c.dices, c.sides, c.ROLLEDVALUE, c.stotal, d.total from (select a.dices dices,a.sides sides, b.ROLLEDVALUE ROLLEDVALUE, sum(b.TIMES) stotal "
-					+ "from dds a, ddsdetails b " + "where a.id=b.dds_id "
-					+ "group by a.dices ,a.sides, b.ROLLEDVALUE) c, "
-					+ "(select dices, sides, sum(rolls) total from dds group by dices ,sides) d "
-					+ "where c.dices=d.dices and c.sides=d.sides";
+		String string1 = "select c.dices, c.sides, c.ROLLEDVALUE, c.stotal, d.total from (select a.dices dices,a.sides sides, b.ROLLEDVALUE ROLLEDVALUE, sum(b.TIMES) stotal "
+				+ "from dds a, ddsdetails b " + "where a.id=b.dds_id " + "group by a.dices ,a.sides, b.ROLLEDVALUE) c, "
+				+ "(select dices, sides, sum(rolls) total from dds group by dices ,sides) d "
+				+ "where c.dices=d.dices and c.sides=d.sides";
 
-			//fetch(conn, string1, true);
+		// fetch(conn, string1, true);
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 
 	private static void showTables(Connection conn) throws SQLException {

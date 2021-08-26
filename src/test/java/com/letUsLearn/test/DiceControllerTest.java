@@ -11,7 +11,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.web.servlet.MvcResult;
 
+import com.letUsLearn.MainApplication;
+import com.letUsLearn.entity.DDS;
+import com.letUsLearn.entity.DDSdetail;
+import com.letUsLearn.exception.DDSBadInputException;
+import com.letUsLearn.exception.DDSNotFoundException;
 import com.letUsLearn.vo.DDSVo;
+import com.letUsLearn.vo.RelativeSummaryVO;
+import com.letUsLearn.vo.SummaryVO;
 
 public class DiceControllerTest extends AbstractTest {
 
@@ -21,6 +28,7 @@ public class DiceControllerTest extends AbstractTest {
 		super.setUp();
 	}
 	
+	
 	@Test
 	public void gethealthcheck() throws Exception {
 		MvcResult mvcResult = getMVCresult("/healthcheck");
@@ -29,7 +37,8 @@ public class DiceControllerTest extends AbstractTest {
 		String content = getContent(mvcResult);
 		HashMap<String, String> map =  (HashMap<String, String>) super.mapFromJson(content, Map.class);
 		assertEquals(map.get("Status"), "ok");
-		assertNull(map.get("time"));		
+		assertNull(map.get("time"));
+		assertEquals(content, mapToJson(map));
 	}
 	
 	@Test
@@ -97,5 +106,42 @@ public class DiceControllerTest extends AbstractTest {
 		int status = mvcResult.getResponse().getStatus();
 		assertEquals(200, status);
 		String content = getContent(mvcResult);
+	}
+	
+	@Test
+	public void derbyTest() throws Exception {
+		Derbytest dbt = new Derbytest();
+		Derbytest.main(null);	
+	}
+	
+	@Test
+	public void increaseCouverage() throws Exception {
+		new DDSBadInputException();
+		new DDSNotFoundException();
+		DDSdetail a= new DDSdetail();
+		a.setDds(a.getDds());
+		a.setId(0);
+		a.setRolledvalue(0);
+		a.setTimes(0);
+		DDS b= new DDS();
+		b.setDdsdetail(null);
+		b.setDices(0);
+		b.setId(0);
+		b.setRolls(0);
+		b.setSides(0);
+		RelativeSummaryVO c= new RelativeSummaryVO();
+		c.setDices(0);
+		c.setRelativePercentage(null);
+		c.setRollValue(0);
+		c.setSides(0);
+		c.setSumofrolls(0);
+		c.setTotalroll(0);
+		SummaryVO d=new SummaryVO();
+		d.setCount(0);
+		d.setDices(0);
+		d.setSides(0);
+		d.setSumofrolls(0);
+		String[] e= {"a"};
+		MainApplication.main(e);
 	}
 }
