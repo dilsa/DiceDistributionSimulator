@@ -8,7 +8,10 @@ public class DDSVo {
 	int sides;
 	int dices;
 	HashMap<Integer, Integer> rollDetails = new HashMap<Integer, Integer>();
-	public DDSVo() {}
+
+	public DDSVo() {
+	}
+
 	public DDSVo(long id, int rolls, int sides, int dices, HashMap<Integer, Integer> map) {
 		this.id = id;
 		this.rolls = rolls;

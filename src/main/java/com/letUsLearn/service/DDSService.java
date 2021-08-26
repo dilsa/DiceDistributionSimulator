@@ -61,7 +61,8 @@ public class DDSService {
 	}
 
 	public DDSVo findbyid(Long id) throws DDSNotFoundException {
-		if (repository1.findById(id).isEmpty())	throw new DDSNotFoundException("No item found for {id}=" + id);
+		if (repository1.findById(id).isEmpty())
+			throw new DDSNotFoundException("No item found for {id}=" + id);
 		DDS dds = repository1.findById(id).get();
 		Iterator<DDSdetail> itr = dds.getDdsdetail().iterator();
 		HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();

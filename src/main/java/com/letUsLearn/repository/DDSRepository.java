@@ -19,9 +19,7 @@ public interface DDSRepository extends JpaRepository<DDS, Long> {
 			+ "(select dices, sides, sum(rolls) total from dds group by dices ,sides) d "
 			+ "where c.dices=d.dices and c.sides=d.sides", nativeQuery = true)
 	List<Integer[]> diceRelativeSummary();
-	
-	
-	
+
 	@Query(value = "select c.dices, c.sides, c.ROLLEDVALUE, c.stotal, d.total from (select a.dices dices,a.sides sides, b.ROLLEDVALUE ROLLEDVALUE, sum(b.TIMES) stotal "
 			+ "from dds a, ddsdetails b " + "where a.id=b.dds_id " + "group by a.dices ,a.sides, b.ROLLEDVALUE) c, "
 			+ "(select dices, sides, sum(rolls) total from dds where dices=?1 and sides=?2 group by dices ,sides) d "
