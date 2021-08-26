@@ -1,5 +1,7 @@
 package com.letUsLearn.controller;
 
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +17,16 @@ public class DiceController {
 	@Autowired
 	DDSService service;
 
+	@RequestMapping(method = RequestMethod.GET, path = "/healthcheck")
+	public ResponseEntity<?> healthcheck(@RequestParam(required = false, name= "format") String format) throws Exception {
+		HashMap<String, String> map = new HashMap<String, String>();
+		if("full".equalsIgnoreCase(format)) {
+			map.put("time", java.time.Instant.now().toString());
+		}
+		map.put("Status", "ok");
+		return ResponseEntity.ok(map);
+	}
+	
 	@RequestMapping(method = RequestMethod.GET, path = "/dds")
 	public ResponseEntity<?> ddsimulator(@RequestParam("dices") int dices, @RequestParam("sides") int sides,
 			@RequestParam("rolls") int rolls) throws Exception {

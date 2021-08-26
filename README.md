@@ -40,6 +40,7 @@ Endpoints:<BR>
 		localhost:8080/dds/relativesummary/3/6<BR>
 		
 Database Tables:<BR>
+The application uses Derby database which creates data files at path C:\Database\Derby  in windows.
 
 <img src="https://embed.creately.com/tZifotMJFUZ?type=svg">
 			

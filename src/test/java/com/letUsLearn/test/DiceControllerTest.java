@@ -1,6 +1,11 @@
 package com.letUsLearn.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,7 +20,29 @@ public class DiceControllerTest extends AbstractTest {
 	public void setUp() {
 		super.setUp();
 	}
-
+	
+	@Test
+	public void gethealthcheck() throws Exception {
+		MvcResult mvcResult = getMVCresult("/healthcheck");
+		int status = mvcResult.getResponse().getStatus();
+		assertEquals(200, status);
+		String content = getContent(mvcResult);
+		HashMap<String, String> map =  (HashMap<String, String>) super.mapFromJson(content, Map.class);
+		assertEquals(map.get("Status"), "ok");
+		assertNull(map.get("time"));		
+	}
+	
+	@Test
+	public void gethealthcheckfull() throws Exception {
+		MvcResult mvcResult = getMVCresult("/healthcheck?format=full");
+		int status = mvcResult.getResponse().getStatus();
+		assertEquals(200, status);
+		String content = getContent(mvcResult);
+		HashMap<String, String> map =  (HashMap<String, String>) super.mapFromJson(content, Map.class);
+		assertEquals(map.get("Status"), "ok");
+		assertNotNull(map.get("time"));		
+	}
+	
 	@Test
 	public void getDDSbyId11() throws Exception {
 		MvcResult mvcResult = getMVCresult("/dds/22222");
@@ -31,7 +58,6 @@ public class DiceControllerTest extends AbstractTest {
 		assertEquals(200, status);
 		String content = getContent(mvcResult);
 		DDSVo ddsvo = (DDSVo) super.mapFromJson(content, DDSVo.class);
-		System.out.println(content);
 	}
 
 	@Test
